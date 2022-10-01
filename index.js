@@ -14,15 +14,27 @@ const http = require("http");
 const {Server} = require('socket.io');
 
 // use cors
-app.use(cors)
+//app.use(cors);
 
-// create server
+app.get("/",(req,res)=>{
+    console.log("hello");
+    res.send("hello")
+});
+
+app.get("/poll/",(req,res)=>{
+    console.log("poll");
+    res.send("poll")
+});
+
+
+//create server
 const server = http.createServer(app);
 
 // instanciate io and configure cors
 const io = new Server(server,{
     cors:{
-        origin:"http://localhost:3001"
+        origin:"*",
+        credentials: true
     }
 });
 
@@ -41,6 +53,6 @@ io.on("connection",(socket)=>{
 });
 
 // set server port
-server.listen("3002",()=>{
+app.listen("3002",()=>{
     console.log("Server is running, Happy coding ^^ ");
 });
